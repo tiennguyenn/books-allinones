@@ -1,5 +1,6 @@
 <script>
-  import Test from "./lib/Test.svelte";
+  import ErrorMessage from "./lib/ErrorMessage.svelte";
+import Test from "./lib/Test.svelte";
 
   let newPost = '';
   let posts = [];
@@ -8,14 +9,16 @@
   let characterLeftStyle;
 
   $:characterLeft = 10 - newPost.length;
-  characterLeftStyle = 'color: blue';
+
   $:if (characterLeft < 0) {
-    characterLeftStyle = 'color: red';
+    characterLeftStyle = 'error';
+  } else {
+    characterLeftStyle = '';
   }
 
   const addPost = () => {
     if (characterLeft<0) {
-      error = 'Exceeded error!';
+      error = 'You have an exceeded characters!';
       return;
     }
     posts = [...posts, newPost];
@@ -27,8 +30,8 @@
   <h1>Soliloquy app</h1>
   <h2>Social media without the sharing</h2>
   <label>Talk to yourself: <input bind:value={newPost} /></label>
-  <span style={characterLeftStyle}>Character left: {characterLeft}</span>
-  <p>{error}</p>
+  <span class={characterLeftStyle}>Character left: {characterLeft}</span>
+  <ErrorMessage error={error} />
   <button on:click={addPost}>Post it</button>
   {#each posts as post}
     <div>{post}</div>
