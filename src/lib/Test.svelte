@@ -1,5 +1,6 @@
 <script>
   import MyButton from "./MyButton.svelte";
+  import TransitionTest from "./TransitionTest.svelte";
 
   export let published = false;
   export let title = undefined;
@@ -22,4 +23,6 @@
 {#each buttonArray as button}
   <MyButton count={button} on:click={clickMe}>Click me</MyButton>
 {/each}
+
+<TransitionTest />
 <p>{message}</p>
